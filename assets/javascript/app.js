@@ -17,51 +17,36 @@ var submit = $("#submit");
 submit.on("click", function(e) {
   e.preventDefault();
   var name = $("#name").val();
-  var role = $("#role").val();
-  var rate = $("#rate").val();
-  var date = $("#date").val();
+  var destination = $("#destination").val();
+  var first = $("#first").val();
+  var frequency = $("#frequency").val();
 
   database.ref().push({
     name: name,
-    role: role,
-    rate: rate,
-    date: date
-  });
-
-  database.ref().on("child_added", function(snap) {
-    var data = snap.val();
-    var rname = data.name;
-    var rrole = data.role;
-    var rrate = data.rate;
-    var rdate = data.date;
+    destination: destination,
+    first: first,
+    frequency: frequency
   });
 });
 
 database.ref().on("child_added", function(snap) {
   var data = snap.val();
-  var rname = data.name;
-  var rrole = data.role;
-  var rrate = data.rate;
-  var rdate = data.date;
-
-  var dateFormat = "YYYY-MM-DD";
-  var momentDate = moment(rdate, dateFormat);
-  var today = moment();
-
-  var diff = today.diff(momentDate, "months");
-  var bill = diff * rrate;
+  name = data.name;
+  destination = data.destination;
+  first = data.first;
+  frequency = data.frequency;
 
   var results =
     "<tr><td>" +
-    rname +
+    name +
     "</td><td>" +
-    rrole +
+    destination +
     "</td><td>" +
-    rdate +
+    frequency +
     "</td><td>" +
-    diff +
+    // rfirst +
     "</td><td>" +
-    rrate +
+    // rrate +
     "</td></tr>";
   tableBody.prepend(results);
   clearValues();
@@ -69,7 +54,7 @@ database.ref().on("child_added", function(snap) {
 
 function clearValues() {
   $("#name").val("");
-  $("#role").val("");
-  $("#rate").val("");
-  $("#date").val("");
+  $("#destination").val("");
+  $("#first").val("");
+  $("#frequency").val("");
 }
