@@ -30,6 +30,14 @@ submit.on("click", function(e) {
 });
 
 database.ref().on("child_added", function(snap) {
+  var firstTrainTime = moment(first, "hh:mm");
+  var timeDifference = moment().diff(moment(firstTrainTime), "minutes");
+  var timeSinceLastDeparture = timeDifference % frequency;
+  var minutesAway = frequency - timeSinceLastDeparture;
+  var nextArrival = moment()
+    .add(minutesAway, "minutes")
+    .format("HH:mm");
+
   var data = snap.val();
   name = data.name;
   destination = data.destination;
@@ -48,8 +56,10 @@ database.ref().on("child_added", function(snap) {
     "</td><td>" +
     frequency +
     "</td><td>" +
-    // rrate +
-    "</td><td></td><td><button class='btn btn-danger' id='delete'>Delete</button></td></tr>";
+    nextArrival +
+    "</td><td>" +
+    parseInt(minutesAway) +
+    "</td><td><button class='btn btn-danger' id='delete'>Delete</button></td></tr>";
   tableBody.prepend(results);
   $("#delete").on("click", function(e) {
     e.preventDefault();
