@@ -44,12 +44,12 @@ database.ref().on("child_added", function(snap) {
     "</td><td>" +
     destination +
     "</td><td>" +
+    first +
+    "</td><td>" +
     frequency +
     "</td><td>" +
-    // rfirst +
-    "</td><td>" +
     // rrate +
-    "</td><td><button class='btn btn-danger' id='delete'>Delete</button></td></tr>";
+    "</td><td></td><td><button class='btn btn-danger' id='delete'>Delete</button></td></tr>";
   tableBody.prepend(results);
   $("#delete").on("click", function(e) {
     e.preventDefault();
