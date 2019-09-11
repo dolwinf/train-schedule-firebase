@@ -35,9 +35,11 @@ database.ref().on("child_added", function(snap) {
   destination = data.destination;
   first = data.first;
   frequency = data.frequency;
-
+  var id = snap.key;
   var results =
-    "<tr><td>" +
+    "<tr data-id='" +
+    id +
+    "'><td>" +
     name +
     "</td><td>" +
     destination +
@@ -47,9 +49,15 @@ database.ref().on("child_added", function(snap) {
     // rfirst +
     "</td><td>" +
     // rrate +
-    "</td></tr>";
+    "</td><td><button class='btn btn-danger' id='delete'>Delete</button></td></tr>";
   tableBody.prepend(results);
-  clearValues();
+  $("#delete").on("click", function(e) {
+    e.preventDefault();
+    var td = $(this).parent();
+    var tr = td.parent();
+    var id = tr.attr("data-id");
+    console.log(id);
+  });
 });
 
 function clearValues() {
