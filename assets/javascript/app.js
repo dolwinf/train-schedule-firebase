@@ -56,8 +56,10 @@ database.ref().on("child_added", function(snap) {
     var td = $(this).parent();
     var tr = td.parent();
     var id = tr.attr("data-id");
-    console.log(id);
+    database.ref(id).remove();
+    tr.remove();
   });
+  clearValues();
 });
 
 function clearValues() {
